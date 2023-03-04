@@ -1,0 +1,58 @@
+{
+  "name": "search coarse",
+  "priorityThresh": 5,
+  "endpoint": "search",
+  "tests": [
+    {
+      "id": 1,
+      "status": "pass",
+      "user": "Diana",
+      "type": "dev",
+      "in": {
+        "focus.point.lat": 40.744243,
+        "focus.point.lon": -73.990342,
+        "text": "brooklyn"
+      },
+      "expected": {
+        "properties": [
+          {
+            "name": "Brooklyn",
+            "layer": "borough",
+            "locality": "New York",
+            "region_a": "NY",
+            "country_a": "USA",
+            "label": "Brooklyn, NY, USA"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "status": "pass",
+      "issue": "https://github.com/pelias/pelias/issues/295",
+      "description": "data issue: new york city was parented by brooklyn in early WOF data",
+      "user": "Diana",
+      "type": "dev",
+      "in": {
+        "focus.point.lat": 40.744243,
+        "focus.point.lon": -73.990342,
+        "text": "new york"
+      },
+      "expected": {
+        "properties": [
+          {
+            "label": "New York, NY, USA"
+          }
+        ]
+      },
+      "unexpected": {
+        "properties": [
+          {
+            "name": "New York",
+            "borough": "Brooklyn"
+          }
+        ]
+      }
+    }
+  ]
+}

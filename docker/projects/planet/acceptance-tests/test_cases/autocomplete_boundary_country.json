@@ -1,0 +1,65 @@
+
+{
+  "name": "autocomplete boundary.country",
+  "priorityThresh": 1,
+  "description": "ensure that only USA results, and especially not GBR results, come back with boundary.country set",
+  "endpoint": "autocomplete",
+  "tests": [
+    {
+      "id": 1,
+      "status": "pass",
+      "user": "julian",
+      "type": "dev",
+      "in": {
+        "boundary.country": "USA",
+        "text": "London"
+      },
+      "unexpected" : {
+        "properties": [
+          {
+            "country_a": "GBR"
+          }
+        ]
+      },
+      "expected": {
+        "properties": [
+          {
+            "country_a": "USA"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "status": "pass",
+      "user": "julian",
+      "type": "dev",
+      "in": {
+        "boundary.country": "COL,MEX",
+        "layers": "coarse",
+        "size": 40,
+        "text": "san francisco"
+      },
+      "unexpected" : {
+        "properties": [
+          {
+            "country_a": "USA"
+          }
+        ]
+      },
+      "expected": {
+        "priorityThresh": 40,
+        "properties": [
+          {
+            "name": "San Francisco",
+            "country_a": "COL"
+          },
+          {
+            "name": "San Francisco Acuautla",
+            "country_a": "MEX"
+          }
+        ]
+      }
+    }
+  ]
+}

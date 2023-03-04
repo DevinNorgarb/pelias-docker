@@ -1,0 +1,280 @@
+{
+  "name": "Search POI",
+  "notes": "For testing POI searches",
+  "priorityThresh": 5,
+  "tests": [
+    {
+      "id": "searchpoi-1",
+      "status": "pass",
+      "description": "@nvkelso couldn't find Target in Eureka while visiting home",
+      "issue": "https://github.com/pelias/pelias/issues/185",
+      "user": "riordan",
+      "in": {
+        "text": "Target Eureka CA"
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "properties": [
+          {
+            "layer": "venue",
+            "name": "Target",
+            "locality": "Eureka",
+            "region": "California"
+          }
+        ]
+      }
+    },
+    {
+      "id": "searchpoi-2",
+      "status": "fail",
+      "description": "@nvkelso couldn't find Target in Eureka while visiting home",
+      "issue": [
+        "https://github.com/pelias/pelias/issues/185",
+        "https://github.com/pelias/query/pull/116"
+      ],
+      "user": "riordan",
+      "in": {
+        "text": "Target Eureka California"
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "properties": [
+          {
+            "layer": "venue",
+            "name": "Target",
+            "locality": "Eureka",
+            "region": "California"
+          }
+        ]
+      }
+    },
+    {
+      "id": "searchpoi-3",
+      "status": "fail",
+      "description": "Searching with focus on",
+      "issue": "https://github.com/pelias/pelias/issues/185",
+      "user": "riordan",
+      "in": {
+        "text": "Target",
+        "focus.point.lat": "40.801944",
+        "focus.point.lon": "-124.163611"
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "properties": [
+          {
+            "layer": "venue",
+            "name": "Target",
+            "locality": "Eureka",
+            "region": "California"
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "status": "fail",
+      "description": "looking for well known venue, focus point is in the same city",
+      "user": "julian",
+      "in": {
+        "text": "wrigley field",
+        "focus.point.lon": -87.6716,
+        "focus.point.lat": 41.8218
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "properties": [{
+          "layer": "venue",
+          "name": "Wrigley Field",
+          "locality": "Chicago",
+          "region": "Illinois"
+        }]
+      }
+    },
+    {
+      "id": 5,
+      "status": "pass",
+      "description": "looking for transit stop, focus point is in the same city",
+      "user": "julian",
+      "in": {
+        "text": "park & market",
+        "focus.point.lon": -117.156841,
+        "focus.point.lat": 32.707233
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 600,
+        "properties": [{
+          "layer": "venue",
+          "name": "Park & Market",
+          "locality": "San Diego",
+          "region": "California"
+        }],
+        "coordinates": [
+          [ -117.153778, 32.710527 ]
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "status": "fail",
+      "description": "looking for an airport",
+      "user": "julian",
+      "in": {
+        "text": "Albuquerque international airport",
+        "focus.point.lat": 35.03773,
+        "focus.point.lon": -106.602979
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 50,
+        "properties": [{
+          "layer": "venue",
+          "name": "Albuquerque International Sunport",
+          "locality": "Albuquerque",
+          "region": "New Mexico"
+        }]
+      }
+    },
+    {
+      "id": 6.1,
+      "status": "fail",
+      "description": "looking for an airport",
+      "issue": "https://github.com/pelias/pelias/issues/260",
+      "user": "julian",
+      "in": {
+        "text": "Albuquerque international sunport",
+        "focus.point.lat": 35.03773,
+        "focus.point.lon": -106.602979
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 50,
+        "properties": [{
+          "layer": "venue",
+          "name": "Albuquerque International Sunport",
+          "locality": "Albuquerque",
+          "region": "New Mexico"
+        }]
+      }
+    },
+    {
+      "id": 7,
+      "status": "pass",
+      "description": "search for the Empire State Building. focus point is in philly",
+      "user": "julian",
+      "in": {
+        "text": "Empire State Building",
+        "focus.point.lat": 39.983,
+        "focus.point.lon": -74.482
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 50,
+        "properties": [{
+          "layer": "venue",
+          "name": "Empire State Building",
+          "locality": "New York",
+          "region": "New York",
+          "country": "United States"
+        }]
+      }
+    },
+    {
+      "id": 8,
+      "status": "fail",
+      "description": "search for the famous La Sagrada Familia",
+      "issue": "https://github.com/pelias/pelias/issues/171",
+      "user": "julian",
+      "in": {
+        "text": "La Sagrada Familia",
+        "focus.point.lat": 39.983,
+        "focus.point.lon": -74.482
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 50,
+        "properties": [{
+          "layer": "venue",
+          "name": "Basílica de la Sagrada Família",
+          "housenumber": "403",
+          "street": "Carrer de Mallorca",
+          "locality": "Barcelona",
+          "country": "Spain"
+        }]
+      }
+    },
+    {
+      "id": 9,
+      "status": "fail",
+      "description": "search for Phoenix Intl airport with focus point in Phoenix",
+      "issue": "https://github.com/pelias/pelias/issues/260",
+      "user": "julian",
+      "in": {
+        "text": "Phoenix International Airport",
+        "focus.point.lat": 33.44155,
+        "focus.point.lon": -112.09721
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 500,
+        "coordinates": [  -112.012869, 33.434743 ],
+        "properties": [{
+          "layer": "venue",
+          "name": "Phoenix Sky Harbor International Airport",
+          "locality": "Phoenix",
+          "region_a": "AZ",
+          "country_a": "USA"
+        }]
+      }
+    },
+    {
+      "id": 9.1,
+      "status": "fail",
+      "description": "search for Phoenix Intl airport with focus point in Phoenix",
+      "issue": "https://github.com/pelias/pelias/issues/260",
+      "user": "julian",
+      "in": {
+        "text": "Phoenix Airport",
+        "focus.point.lat": 33.44155,
+        "focus.point.lon": -112.09721
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 500,
+        "coordinates": [  -112.012869, 33.434743 ],
+        "properties": [{
+          "layer": "venue",
+          "name": "Phoenix Sky Harbor International Airport",
+          "locality": "Phoenix",
+          "region_a": "AZ",
+          "country_a": "USA"
+        }]
+      }
+    },
+    {
+      "id": 9.2,
+      "status": "fail",
+      "description": "search for Phoenix Intl airport with focus point in Phoenix",
+      "issue": "https://github.com/pelias/pelias/issues/260",
+      "user": "julian",
+      "in": {
+        "text": "Phoenix sky harbor",
+        "focus.point.lat": 33.44155,
+        "focus.point.lon": -112.09721
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "distanceThresh": 500,
+        "coordinates": [  -112.012869, 33.434743 ],
+        "properties": [{
+          "layer": "venue",
+          "name": "Phoenix Sky Harbor International Airport",
+          "locality": "Phoenix",
+          "region_a": "AZ",
+          "country_a": "USA"
+        }]
+      }
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "name": "fallback queries",
+  "priorityThresh": 5,
+  "endpoint": "search",
+  "tests": [
+    {
+      "id": 1,
+      "status": "pass",
+      "user": "trescube",
+      "type": "dev",
+      "notes": [
+        "this test verifies that a housenumber+street outscores the very common city of berlin",
+        "https://github.com/pelias/pelias/issues/442"
+      ],
+      "in": {
+        "text": "grolmanstraße 51, berlin"
+      },
+      "expected": {
+        "properties": [
+          {
+            "layer": "address",
+            "country_a": "DEU",
+            "locality": "Berlin",
+            "housenumber": "51",
+            "street": "Grolmanstraße"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "status": "pass",
+      "user": "trescube",
+      "type": "dev",
+      "notes": [
+        "this test verifies that a street outscores the very common city of berlin",
+        "https://github.com/pelias/pelias/issues/442"
+      ],
+      "in": {
+        "text": "grolmanstraße, berlin"
+      },
+      "expected": {
+        "properties": [
+          {
+            "layer": "street",
+            "country_a": "DEU",
+            "locality": "Berlin",
+            "street": "Grolmanstraße"
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "status": "pass",
+      "user": "trescube",
+      "type": "dev",
+      "notes": [
+        "this test verifies that a housenumber+street outscores the very common city of berlin",
+        "https://github.com/pelias/pelias/issues/442"
+      ],
+      "in": {
+        "text": "101 california, san francisco"
+      },
+      "expected": {
+        "properties": [
+          {
+            "layer": "address",
+            "country_a": "USA",
+            "locality": "San Francisco",
+            "housenumber": "101",
+            "street": "California"
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "status": "pass",
+      "user": "julian",
+      "description": "query for a nonexistent street in a city returns that city, rather than instances of that street in other cities",
+      "in": {
+        "text": "california avenue, berlin, germany"
+      },
+      "expected": {
+        "properties": [
+          {
+            "name": "Berlin",
+            "layer": "locality",
+            "country_a": "DEU",
+            "locality": "Berlin",
+            "match_type": "fallback"
+          }
+        ]
+      },
+      "unexpected": {
+        "properties": [
+          {
+            "layer": "street"
+          },
+          {
+            "name": "California Avenue"
+          }
+        ]
+      }
+    }
+  ]
+}

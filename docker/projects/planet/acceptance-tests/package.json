@@ -1,0 +1,43 @@
+{
+  "name": "pelias-acceptance-tests",
+  "version": "0.0.0",
+  "description": "Acceptance tests for Pelias Geocoder API",
+  "keywords": [
+    "tests",
+    "api",
+    "acceptance",
+    "regression",
+    "continuous-integration"
+  ],
+  "author": "mapzen",
+  "main": "index.js",
+  "scripts": {
+    "config": "node -e \"console.log(JSON.stringify(require( 'pelias-config' ).generate(), null, 2))\"",
+    "test": "./node_modules/pelias-fuzzy-tester/bin/fuzzy-tester",
+    "lint": "jshint .",
+    "validate": "npm ls"
+  },
+  "dependencies": {
+    "pelias-fuzzy-tester": "^1.19.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.4",
+    "precommit-hook": "3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelias/acceptance-tests"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pelias/acceptance-tests/issues"
+  },
+  "pre-commit": [
+    "lint",
+    "validate"
+  ],
+  "homepage": "https://github.com/pelias/acceptance-tests",
+  "engines": {
+    "npm": "~2.0.0"
+  }
+}

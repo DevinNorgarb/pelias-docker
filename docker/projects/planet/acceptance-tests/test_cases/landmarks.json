@@ -1,0 +1,53 @@
+{
+  "name": "landmarks",
+  "priorityThresh": 5,
+  "tests": [
+    {
+      "id": 14,
+      "status": "fail",
+      "description": [
+        "because there is no indication of importance or popularity in our data",
+        "we have no way of knowing how to properly sort the results.",
+        "When they all have a name that matches the query, sort order of results",
+        "is based purely on order at import time or some variable ES search process.",
+        "In order to really fix this test, we must find definitive source of popularity data",
+        "for POIs that have common names."
+      ],
+      "issue": "https://github.com/pelias/pelias/issues/171",
+      "type": "dev",
+      "user": "hkrishna",
+      "in": {
+        "text": "statue of liberty"
+      },
+      "expected": {
+        "priorityThresh": 1,
+        "properties": [
+          {
+            "name": "Statue of Liberty",
+            "locality": "New York",
+            "country_a": "USA",
+            "label": "Statue of Liberty, Manhattan, New York, NY, USA"
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "status": "pass",
+      "user": "julian",
+      "in": {
+        "text": "australian war memorial, canberra, australia"
+      },
+      "expected": {
+        "properties": [
+          {
+            "name": "Australian War Memorial",
+            "locality": "Campbell",
+            "region_a": "ACT",
+            "country_a": "AUS"
+          }
+        ]
+      }
+    }
+  ]
+}
